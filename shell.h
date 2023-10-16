@@ -2,12 +2,12 @@
 #define SHELL_H
 
 #include <unistd.h>
-<<<<<<< HEAD
+#include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 void prompt(void);
 char *_getline();
-=======
+
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -20,5 +20,4 @@ extern char **environ;
 char **_argv(char *line);
 char *_duplicate(char *str);
 
->>>>>>> ca1a8cb34e056b85b25f03c65dbb41025199d639
 #endif
