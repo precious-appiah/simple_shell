@@ -52,6 +52,7 @@ int main(void)
 		{
 			dup_str = _duplicate(buffer);
 			argv = _argv(dup_str);
+			_builtin(&buffer, &argv, &dup_str);
 			if (!argv[0])
 				break;
 			if ((execve(argv[0], argv, environ)) == -1)

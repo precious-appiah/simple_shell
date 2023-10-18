@@ -15,5 +15,6 @@ extern char **environ;
 char **_argv(char *line);
 char *_duplicate(char *str);
 void signal_handler(int signum);
+void _builtin(char **line, char ***argv, char **dup_str);
 
 #endif
