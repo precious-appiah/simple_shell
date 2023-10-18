@@ -1,10 +1,10 @@
 #include "shell.h"
 
+void signal_handler(int signum);
 /**
  * prompt - function to print prompt in interactive mode
  * Return: Nothing
 */
-
 void prompt(void)
 {
 	if (isatty(STDIN_FILENO))
@@ -17,15 +17,16 @@ void prompt(void)
 */
 int main(void)
 {
-	char *buffer = NULL, **argv, *dup_str;
 	size_t n = 0;
 	ssize_t read;
 	pid_t pid;
+	char *buffer = NULL;
+	char **argv = NULL;
+	char *dup_str = NULL;
 
 	while (1)
 	{
 		prompt();
-
 		read = getline(&buffer, &n, stdin);
 		if (read == -1)
 		{
@@ -41,12 +42,16 @@ int main(void)
 		{
 			perror("An error occured");
 			free(buffer);
+			buffer = NULL;
+			free(argv);
+			argv = NULL;
+			free(dup_str);
+			dup_str = NULL;
 		}
 		if (pid == 0)
 		{
 			dup_str = _duplicate(buffer);
 			argv = _argv(dup_str);
-
 			if (!argv[0])
 				break;
 			if ((execve(argv[0], argv, environ)) == -1)
@@ -57,12 +62,26 @@ int main(void)
 			wait(NULL);
 			free(buffer);
 			buffer = NULL;
+			free(argv);
+			argv = NULL;
+			free(dup_str);
+			dup_str = NULL;
 		}
-
 	}
-
 	free(buffer);
-	free(argv);
 	free(dup_str);
+	free(argv);
 	return (0);
+}
+
+/**
+ * signal_handler - function to handle signals
+ * @signum: integer
+ * Return: void
+*/
+
+void signal_handler(int signum)
+{
+	(void)signum;
+	exit(0);
 }
