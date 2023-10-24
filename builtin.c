@@ -17,7 +17,7 @@ void _builtin(char **line, char ***argv, char **dup_str)
 		free(*line);
 		free(*argv);
 		free(*dup_str);
-		exit(0);
+		exit(2);
 	}
 	if ((_strcmp((*argv)[0], "env")) == 0)
 	{
